@@ -1,0 +1,11 @@
+*.swp
+*.swo
+*.swn
+anime_list.txt
+*.bak
+data_*.txt
+player_*.txt
+video_*.txt
+*.log
+*.html
+*.mp4
