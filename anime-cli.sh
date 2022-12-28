@@ -272,9 +272,9 @@ if [ "$fzf" = true ]; then
     episode_number=$(echo "$episode_list" | fzf --height 40% --layout=reverse --border --reverse --cycle --preview "curl -sL $sib_url | grep -o 'https://video.sibnet.ru/sys/player/[^.]*.mp4' | xargs -I {} mpv {} --no-audio --no-video --frames=1 --vo=null --ao=null --screenshot-format=jpg --screenshot-template=preview.jpg --screenshot-directory=/tmp/ && feh /tmp/preview.jpg")
 fi
 
-if [ "$download_only" =  false]; then
-  $player "$sib_url" "$@"
-fi
+  
+# play video
+mpv "$sib_url" "$@"
 
 color_blue " press n for next episode
        enter p for previous episode
