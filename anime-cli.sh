@@ -11,7 +11,7 @@
 cache_dir="$HOME/.cache/anime-cli"
 version="1.0.1"
 logo="logo.png"
-github_source="https://raw.githubusercontent.com/meteor314/anime-cli/master/anime.cli.sh"
+github_source="https://raw.githubusercontent.com/meteor314/anime-cli/master/anime-cli.sh"
 ######€€€#
 # colors #
 ##########
@@ -274,39 +274,50 @@ fi
 
   
 # play video
+
+color_yellow "Playing episode $episode_number, please wait..."
 mpv "$sib_url" "$@"
 
-color_blue " press n for next episode
-       enter p for previous episode
-       enter d for download episode
-       enter q for quit
-       enter r for replay episode.
-       "
-
 while true; do
-  color_yellow "Playing episode $episode_number, please wait..."
+
+  color_blue "press n for next episode
+  enter p for previous episode
+  enter d for download episode
+  enter q for quit
+  enter r for replay episode.
+  Enter your choice: "
+
+
   read -rsn1 input
+  color_green  "$input"
   if [ "$input" = "q" ]; then
     break
   fi
+  
+  color_yellow "Playing episode $episode_number, please wait..."
+
   if [ "$input" = "n" ]; then
     episode_number=$((episode_number + 1))
     if [ "$episode_number" -gt "$number_of_episodes" ]; then
         episode_number=1
     fi
   fi
+
   if [ "$input" = "p" ]; then
     episode_number=$((episode_number - 1))
     if [ "$episode_number" -lt 1 ]; then
         episode_number=$number_of_episodes
     fi
   fi
+ 
   if [ "$input" = "d" ]; then
     download_video "$episode_number"
   fi
+ 
   if [ "$input" = "r" ]; then
     episode_number=$((episode_number))
   fi
+  
   episode=$(cat video_id.txt | sed -n "$episode_number"p)
   sib_url="https://video.sibnet.ru/shell.php?videoid=$episode"
   mpv "$sib_url" "$@"
